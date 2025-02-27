@@ -143,3 +143,89 @@ Just return from the cached
 <!-- LIBUV  :Asynchronous I/O Made Simple   :acts as miidleware in between V8 and OS(side-effect)-->
 
 https://v8.dev/
+
+Phases Overview
+┌───────────────────────────┐
+┌─>│ timers │
+│ └─────────────┬─────────────┘
+│ ┌─────────────┴─────────────┐
+│ │ pending callbacks │
+│ └─────────────┬─────────────┘
+│ ┌─────────────┴─────────────┐
+│ │ idle, prepare │
+│ └─────────────┬─────────────┘ ┌───────────────┐
+│ ┌─────────────┴─────────────┐ │ incoming: │
+│ │ poll │<─────┤ connections, │
+│ └─────────────┬─────────────┘ │ data, etc. │
+│ ┌─────────────┴─────────────┐ └───────────────┘
+│ │ check │
+│ └─────────────┬─────────────┘
+│ ┌─────────────┴─────────────┐
+└──┤ close callbacks │
+└───────────────────────────┘
+timers: this phase executes callbacks scheduled by setTimeout() and setInterval().
+pending callbacks: executes I/O callbacks deferred to the next loop iteration.
+idle, prepare: only used internally.
+poll: retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.
+check: setImmediate() callbacks are invoked here.
+close callbacks: some close callbacks, e.g. socket.on('close', ...).
+
+<!-- Is Node JS is Single Threaded or Multi Threaded -->
+<!-- It Depends how and what code is there  -->
+
+<!-- One Full Cycle is Known as ONE TICK -->
+
+<!-- Thread Pool  -->
+
+<!-- fs / dns.lookup - crypto  -->
+<!-- user specified Input -->
+
+<!-- Size of UV Thread Pool is 4  -->
+
+<!-- process.UV_THREADPOOL_SIZE =  4 -->
+
+iF user requesting from api then so it basically make a connection TCP IP so Networking
+So,Socket is Needed for a Connection
+
+Each Socket has Socket Descriptor also known as File Descriptor and operates in O(1).
+
+<!-- Scaleable I/O Event Notification Mechanism -->
+
+Os => epoll (linux)
+kqueue => (Macos)
+
+Collection of Socket Descriptor is called as epoll descriptor
+One Epoll Descriptor Handle Multiple Connections.
+
+Epoll is a Linux kernel system call that monitors multiple file descriptors for I/O activity. It was introduced in Linux kernel version 2.5.45.
+
+Epoll in Node.js
+There is a low-level Node.js binding for the Linux epoll API.
+Epoll can be used to monitor multiple file descriptors in Node.js.
+
+epoll uses a red–black tree (RB-tree) data structure to keep track of all file descriptors that are currently being monitored.
+
+While Timers have a min heap
+
+Learn Event Emitter ,Stream and Buffer and Pipe
+
+<!-- Some Learning -->
+
+<!-- Dont Block the Main Thread  -->
+
+Sync Methods
+Complex Regex
+Heavy Json Objects
+Complex Calculations/loops
+
+<!-- Data Structure is Important -->
+<!-- Naming is Very Important -->
+
+process.nextTick() vs setImmediate()
+We have two calls that are similar as far as users are concerned, but their names are confusing.
+
+process.nextTick() fires immediately on the same phase
+setImmediate() fires on the following iteration or 'tick' of the event loop
+In essence, the names should be swapped. process.nextTick() fires more immediately than setImmediate(), but this is an artifact of the past which is unlikely to change. Making this switch would break a large percentage of the packages on npm. Every day more new modules are being added, which means every day we wait, more potential breakages occur. While they are confusing, the names themselves won't change.
+
+<!-- There's a lot of Learn -->
