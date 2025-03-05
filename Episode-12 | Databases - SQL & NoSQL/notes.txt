@@ -1,0 +1,41 @@
+A database is an organized collection of structured information,
+ or data, typically stored electronically in a computer system. 
+ A database is usually controlled by a database management system (DBMS).
+
+ Types of Database :
+ 1.Relational DB : MySql , postgreSql
+ 2.NoSQl DB : MongoDB
+ 3.In Memory DB : Redis
+ 4.Distributed DB : Cockroach DB
+ 5.Time Series DB : Influx DB
+ 6. OO DB - db4o
+ 7.Graph DB - Neo4j
+ 8.Hierrchical DB - IBM IMS
+ 9.Network DB - IDMS
+ 10.Cloud DB - Amazon RDS
+
+
+ RDBMS (MySQL)
+ Table,Rows,Columns
+ Structured Data
+ Fixed Schema
+ SQL (Structured Query Language)
+ Tough Horizontal Scaling
+ Relationships - Foreign Keys and Joins
+ Read Heavy Applications,Transaction Workloads 
+ Ex. Banking Apps
+
+ NoSQL  (MongoDB)
+ Collection ,document ,fields
+ Unstructured Data
+ Flexible Schema
+ Mongo (MQL), Neo4J (cyper)
+ Easy to Scale Horizotally or Vertically 
+ Nested Relationships
+ Real Time ,Big Data ,Distributed Computing
+ Ex.Real Time Ananlytics ,Social Media
+
+ 
+
+
+
